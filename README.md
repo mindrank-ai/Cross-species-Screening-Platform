@@ -37,7 +37,7 @@ The candidate and target files should have two columns, which are `ID` and `SMIL
 The candidate and target file format example. e.g.
 ![image.png](https://github.com/mindrank-ai/Cross-species-Screening-Platform/blob/main/pic/candidate.jpg)
 
-Columns `ID` of output file is the id of candidate smiles. The other columns are combine by target id and similarity method. For instance, the column `Structure2D_CID_23725625_COS` is target `Structure2D_CID_23725625` computing by `COS` method.
+Columns `ID` of output file is the id of candidate smiles. The other columns are combined with target id and similarity method. For instance, the column `Structure2D_CID_23725625_COS` is target `Structure2D_CID_23725625` computing by `COS` method.
 
 PS: `COS` is mol2vec similarity, `D3` is 3d similarity, `Struc` is 2d similarity.
 
