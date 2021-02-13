@@ -53,29 +53,30 @@ class checkit(object):
         pass
     
     
-@checkit()
+
 def parse_args():
     """Parses input arguments."""
-    parser = argparse.ArgumentParser(description="Scoring the SMILES.")
-    parser.add_argument("--query-type", "-q",
-                        help="Input query type.",
-                        type=str, default="drugs")
-    
-    parser.add_argument("--query-size", "-s",
-                        help="Input query type.",
-                        type=int, default=10)
-    
-    parser.add_argument("--max-theads", "-m",
-                        help="Input query type.",
-                        type=int, default=20)
-    parser.add_argument("--target", "-t",
-                        help="Input target.",
+    parser = argparse.ArgumentParser(description="Cross species Screening Platform.")
+    parser.add_argument("--candidate-file", "-c",
+                        help="Candidate data filename.",
                         type=str, required = True)
     
-    parser.add_argument("--file-name", "-n",
-                        help="Input result file file name.",
-                        type=str, default="result")
+    parser.add_argument("--target-file", "-t",
+                        help="Target data filename.",
+                        type=str, required = True)
+    
+    parser.add_argument("--output-file", "-o",
+                        help="Output data filename.",
+                        type=str, default="output")
+    
+    parser.add_argument("--path", "-p",
+                        help="input file path",
+                        type=str, default="./data")
+    
+    parser.add_argument("--cores", "-cores",
+                        help="computing cores.",
+                        type=int, default=20)
+    
     parser.add_argument("--save", action="store_true", help="Save result or not.")
-    parser.add_argument("--isTest", action="store_true", help="Testing or not.")
 
     return parser.parse_args()

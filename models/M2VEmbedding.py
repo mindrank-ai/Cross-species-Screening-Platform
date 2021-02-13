@@ -11,7 +11,7 @@ class M2VEmbedding(MultiProcess):
         self.model_path = "./data"
         self.method = method
         self.data = data
-        self.model = word2vec.Word2Vec.load(f'{self.model_path}/model_300dim.pkl')
+        self.model = word2vec.Word2Vec.load(f'{self.model_path}/model_300dim_4smiles.pkl')
        
     @checkit()
     def sentence2vec_result(self, data):

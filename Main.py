@@ -2,6 +2,7 @@ import os
 import sys
 from models.StandardFactory import StandardFactory
 from models.ImportTools import *
+from models.Utils import parse_args
 import numpy as np
 import pandas as pd
 
@@ -50,20 +51,20 @@ def emb_filter(data_dic=None):
         result[k] = tmp_lst
     return result
     
-def get_similarity(input_path="", candidate_file="", target_file=""):
+def get_similarity(input_path="", candidate_file="", target_file="", cores=20):
     
-    df_c = pd.read_csv(input_path + candidate_file)
-    df_t = pd.read_csv(input_path + target_file)
+    df_c = pd.read_csv(f"{input_path}/{candidate_file}")
+    df_t = pd.read_csv(f"{input_path}/{target_file}")
 
     emb_dic = {}
     emb_dic['test_c'] = df_c
     emb_dic['test_t'] = df_t
-    emb_result =emb_filter(data_dic = process_all_emb(data_dic = emb_dic, cores=20)) 
+    emb_result =emb_filter(data_dic = process_all_emb(data_dic = emb_dic, cores=cores)) 
     result_c = emb_result['test_c']
     result_t = emb_result['test_t']
     socre_dic = {}
     socre_dic['test_socre'] = [result_t, result_c]
-    score_result = process_all_score(data_dic = socre_dic, cores=20)
+    score_result = process_all_score(data_dic = socre_dic, cores=cores)
     df_result = df_c[['ID']]
     for df_ in score_result['test_socre']:
         df_result = df_result.merge(df_, on='ID', how='left')
@@ -73,7 +74,16 @@ def get_similarity(input_path="", candidate_file="", target_file=""):
 
 if __name__ == "__main__":
     start =time.time()
-    result = get_similarity(input_path="./data/", candidate_file="candidate_test.csv", target_file="target_test.csv")
+    args = parse_args()
+    print(f"file path: {args.path}")
+    print(f"cadidate file: {args.candidate_file}")
+    print(f"target file: {args.target_file}")
+    print(f"output file: {args.output_file}")
+    print(f"computing cores: {args.cores}")
+    print(f"need save result : {args.save}")
+    result = get_similarity(input_path=args.path, candidate_file=args.candidate_file, target_file=args.target_file, cores=args.cores)
+    if args.save:
+        result.to_csv(f'{args.path}/{args.output_file}.csv', index=False)
     print(result.head())
     end = time.time()
     print('Running time: %s Seconds'%(end-start))
